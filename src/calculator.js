@@ -1,7 +1,27 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-const App = () => {
+import { Plus, Minus, Multiplication, Division } from './actions/calcActions'
+
+const Calculator = ( {counter, Plus, Minus, Multiplication, Division} ) => {
+
 	let num1, num2, symbol;
+
+	const changeAction = () => {
+		switch (symbol) {
+			case '+':
+				return Plus(num1, num2);
+			case '-':
+				return Minus(num1, num2)
+			case '*':
+				return Multiplication(num1, num2)
+			case '/':
+				return Division(num1, num2)
+			default:
+				break;
+		}
+	};
+
 	return (
 		<div className="container">
 			<h3 className="d-flex justify-content-center">Calculator</h3>
@@ -22,10 +42,10 @@ const App = () => {
 					   placeholder="" 
 					   onChange={e => num2 = e.target.value}/>
 				<input className="form-control" type="text" placeholder="=" disabled="" />
-				<input className="form-control" type="text" placeholder="" readOnly="" />
+				<input className="form-control" type="text" placeholder={counter} readOnly=""/>
 				<button type="button" 
 					    className="text-center btn btn-success"
-						onClick={ () => {console.log(num1, symbol, num2)}}>
+						onClick={ () =>  {changeAction()}}>
 							Success
 				</button>
     		</div>
@@ -34,4 +54,10 @@ const App = () => {
 	)
 }
 
-export default App;
+const mapStateToProps = ( {CalcReducer} ) => {
+	const { counter } = CalcReducer;
+	return { counter }
+}
+const mapDispatchToProps = ( {Plus, Minus, Multiplication, Division} ) ;
+
+export default connect(mapStateToProps, mapDispatchToProps)(Calculator);
