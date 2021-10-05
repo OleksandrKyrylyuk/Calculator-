@@ -1,12 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { Plus, Minus, Multiplication, Division } from './actions/calcActions'
+import * as actions from './actions/calcActions'
 
 const Calculator = ( {counter, Plus, Minus, Multiplication, Division} ) => {
 
 	let num1, num2, symbol;
-
+	console.log(actions);
 	const changeAction = () => {
 		switch (symbol) {
 			case '+':
@@ -58,6 +58,5 @@ const mapStateToProps = ( {CalcReducer} ) => {
 	const { counter } = CalcReducer;
 	return { counter }
 }
-const mapDispatchToProps = ( {Plus, Minus, Multiplication, Division} ) ;
 
-export default connect(mapStateToProps, mapDispatchToProps)(Calculator);
+export default connect(mapStateToProps, actions)(Calculator);
